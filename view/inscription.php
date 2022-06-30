@@ -1,20 +1,35 @@
-<?php
-
-require_once(__DIR__ . '/../database/DB.php');
 
 
+<?php 
+require_once ("../models/user.php");
+$user = new User();
 
-if (isset($_POST['suscribe'])) {
+if(isset($_POST['submit'])){
 
-    $nom = htmlspecialchars(trim(ucwords(strtolower($_POST['nom']))));
-    $prenom = htmlspecialchars(trim(ucwords(strtolower($_POST['prenom']))));
-    $email = htmlspecialchars(trim($_POST['email']));
-    $mdp = htmlspecialchars(trim($_POST['mdp']));
-    $mdpconfirm = htmlspecialchars(trim($_POST['mdpconfirm']));
-    $role_id = 2;
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $email = $_POST['email'];
+    $mdp = $_POST['mdp'];
+    $mdpconfirm = $_POST['mdpconfirm'];
+    $role_id = $_POST['role_id'];
 
 
-    $valid = (boolean) true;
+    if(!empty($email) && !empty($mdp) && !empty($mdpconfirm)){
+        if($user->checkLoginExist($email) === 0){
+            if($mdp === $mdpconfirm){
+                $user->createUser($email, $mdp);
+                header('location:index.php');
+            }else{
+                echo 'Les mots de passes ne correspondent pas';
+            }
+        }else{
+            echo 'Ce login existe déjà';
+        }
+    }else{
+        echo 'Veuillez remplir tous les champs';
+    }
+
+}
 
 
      // NOM
@@ -48,29 +63,29 @@ if (isset($_POST['suscribe'])) {
 
     // EMAIL
 
-    $reqmail = $bdd->prepare("SELECT * FROM admins WHERE email =:email");
-    $reqmail->setFetchMode(PDO::FETCH_ASSOC);
-    $reqmail->execute(['email'=>$email]);
 
-    $resultmail = $reqmail->fetch();
+  $reqmail = $bdd->prepare("SELECT * FROM admins WHERE email =:email");
+  $reqmail->setFetchMode(PDO::FETCH_ASSOC);
+  $reqmail->execute(['email'=>$email]);
 
-    if (empty($email)) {
-        $valid=false;
-        $err_email = "Renseignez l'email.";
-    }
+  $resultmail = $reqmail->fetch();
 
-    elseif(filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
-        $valid=false;
-        $err_email = "Votre email n'est pas au bon format";
-        $email="";
-    }
+  if (empty($email)) {
+      $valid=false;
+      $err_email = "Renseignez l'email.";
+  }
 
-    elseif ($resultmail) {
-        $valid = false;
-        $err_email = "Cette adresse mail est déjà utilisée.";
-        $email ="";
-    }
+  elseif(filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
+      $valid=false;
+      $err_email = "Votre email n'est pas au bon format";
+      $email="";
+  }
 
+  elseif ($resultmail) {
+      $valid = false;
+      $err_email = "Cette adresse mail est déjà utilisée.";
+      $email ="";
+  }
 
     // ! MOT DE PASSE
 
@@ -94,25 +109,6 @@ if (isset($_POST['suscribe'])) {
     }
     
 
- 
-    if ($valid==true) {
-
-        $data = [
-            'nom'=>$nom,
-            'prenom'=>$prenom,
-            'email'=>$email,
-            'mdp'=>$mdp,
-            'role_id'=>$role_id,
-
-        ]; 
-        
-        $query = " INSERT INTO admins (nom, prenom, email, mdp, role_id) VALUES (:nom, :prenom, :email, :mdp, :role_id)";
-        $insert = $bdd->prepare($query);
-        $insert->execute($data);
-
-        header('Location: connexion.php?succes=true');   
-    }
-}
 
 
 ?>   
