@@ -27,9 +27,7 @@ if(isset($_POST['connect'])){
         echo 'Veuillez remplir tous les champs';
     }
 
-}    
-
-
+  
 
     // EMAIL
 
@@ -59,6 +57,8 @@ if(isset($_POST['connect'])){
     } else {
         $mdp = password_hash($mdp, PASSWORD_DEFAULT);
     }
+
+}
     
 
 

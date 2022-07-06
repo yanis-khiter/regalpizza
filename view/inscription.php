@@ -1,7 +1,7 @@
 
 
 <?php 
-require_once ("../models/user.php");
+require_once ("../model/user.php");
 $user = new User();
 
 if(isset($_POST['submit'])){
@@ -17,7 +17,7 @@ if(isset($_POST['submit'])){
     if(!empty($email) && !empty($mdp) && !empty($mdpconfirm)){
         if($user->checkLoginExist($email) === 0){
             if($mdp === $mdpconfirm){
-                $user->createUser($email, $mdp);
+                $user->createUser($nom, $prenom, $email, $mdp, $role_id);
                 header('location:index.php');
             }else{
                 echo 'Les mots de passes ne correspondent pas';
@@ -64,11 +64,7 @@ if(isset($_POST['submit'])){
     // EMAIL
 
 
-  $reqmail = $bdd->prepare("SELECT * FROM admins WHERE email =:email");
-  $reqmail->setFetchMode(PDO::FETCH_ASSOC);
-  $reqmail->execute(['email'=>$email]);
 
-  $resultmail = $reqmail->fetch();
 
   if (empty($email)) {
       $valid=false;
@@ -91,14 +87,17 @@ if(isset($_POST['submit'])){
 
     if (empty($mdp)) {
         $valid = false;
-        $err_mdp = "Renseignez votre mot de passe.";
-    } elseif (strlen($mdp)<8) {
+        $err_nom = "Renseignez votre mot de passe.";
+
+    } elseif (!preg_match("^(?=.{8,}$) (?=. [a-z]) (?=. [A-Z]) (?=.[0-9]) (?=.\w). *$", $mdp)) {
         $valid = false;
-        $err_mdp = "Le mot de passe doit être de 8 caractères minimum.";
-        $mdp="";
+        $err_mdp = "Un mot de passe contenant au moins 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial et une longueur
+        $mdp ";
+
     } elseif (empty($mdpconfirm)) {
         $valid = false;
         $err_mdpconfirm = "Confirmez votre mot de passe.";
+
     } elseif ($mdp !== $mdpconfirm) {
         $valid = false;
         $err_mdpconfirm = "Les mots de passe ne sont pas identiques.";
@@ -108,7 +107,6 @@ if(isset($_POST['submit'])){
         $mdp = password_hash($mdp, PASSWORD_DEFAULT);
     }
     
-
 
 
 ?>   
@@ -157,7 +155,7 @@ if(isset($_POST['submit'])){
             
                 </div>
 
-                <div id="buttoncon"> <input class="inputinside" name="suscribe" type="submit" value="S'inscrire"> </div> 
+                <div id="buttoncon"> <input class="inputinside" name="submit" type="submit" value="S'inscrire"> </div> 
 
             </form>
 

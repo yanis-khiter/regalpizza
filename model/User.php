@@ -63,6 +63,10 @@ public function getAllUsers(){
 }
 
 
+
+
+
+
 //UPDATE
 public function updateUser($nom, $prenom, $email, $mdp, $role_id){
     //On écrit la requête
