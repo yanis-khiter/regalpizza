@@ -14,11 +14,11 @@ if(isset($_POST['connect'])){
     $mdp = $_POST['mdp'];
 
     if(!empty($email) && !empty($mdp)){
-
+        // $check_password=password_verify($mdp,$);
         if($user->checkUserExist($email, $mdp) === 1){
             $_SESSION['email'] = $email;
 
-            header('location:index.php');
+            header('location:index_admin.php');
 
         }else{
             echo 'Erreur de login ou de mot de passe';

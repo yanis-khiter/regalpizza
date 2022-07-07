@@ -1,35 +1,42 @@
 <?php 
-    require_once('./model/Bdd.php');
+    require('./model/Admin.php');
 
-    if (isset($_SESSION['btn_insert'])) {
-        $nom = $_SESSION['nom'];
-        $prenom = $_SESSION['prenom'];
-        $email = $_SESSION['email'];
-        $id = $_SESSION['id'];
+    $bdd_categorie = new Admin();
+
+    if (isset($_POST['btn_insert'])) {
+
+        $nom = $_POST['nom'];
+        $prenom = $_POST['prenom'];
+        $email = $_POST['email'];
+        $mdp = $_POST['mdp'];
+        $role_id = $_POST['role_id'];
 
         if (empty($nom)) {
             $errorMsg = "Entrez votre nom s'il vous plait";
         } else if (empty($prenom)) {
             $errorMsg = "Entrez votre prenom s'il vous plait";
-        } else if (empty($email)) {
+        }else if (empty($email)) {
             $errorMsg = "Entrez votre email s'il vous plait";
+        }else if (empty($mdp)) {
+            $errorMsg = "Entrez votre mdp s'il vous plait";
         } else if (empty($role_id)) {
-            $errorMsg = "Entrez votre ID s'il vous plait";
+            $errorMsg = "Entrez le rôle s'il vous plait";
         } else {
+  
             try {
+      
                 if (!isset($errorMsg)) {
-                    $insert_stmt = $this->$bdd->prepare("INSERT INTO admins(nom, prenom, email, role_id) VALUES (:nom, :prenom, :email, :role_id )");
-                    $insert_stmt->bindParam(':nom', $nom);
-                    $insert_stmt->bindParam(':prenom', $prenom);
-                    $insert_stmt->bindParam(':email', $email);
-                    $insert_stmt->bindParam(':role_id', $role_id);
+                    $password_hash= password_hash($mdp,PASSWORD_BCRYPT);
+                    
+                    $bdd_categorie->createUser($nom, $prenom, $email, $password_hash, $role_id);
 
-                    if ($insert_stmt->execute()) {
-                        $insertMsg = "Insertion réussie...";
+                    $insertMsg = "Insertion réussie ! Vous allez être redirigé";
+
+
                         header("refresh:2;index_admin.php");
                     }
                 }
-            } catch (PDOException $e) {
+             catch (PDOException $e) {
                 echo $e->getMessage();
             }
         }
@@ -54,7 +61,7 @@
          if (isset($errorMsg)) {
     ?>
         <div class="alert alert-danger">
-            <strong>Erreur ! <?php echo $errorMsg; ?></strong>
+            <strong>Erreur ! <?= $errorMsg; ?></strong>
         </div>
     <?php } ?>
     
@@ -63,7 +70,7 @@
          if (isset($insertMsg)) {
     ?>
         <div class="alert alert-success">
-            <strong>Réussie ! <?php echo $insertMsg; ?></strong>
+            <strong>Réussie ! <?=$insertMsg; ?></strong>
         </div>
     <?php } ?>
 
@@ -93,14 +100,23 @@
             </div>
             <div class="form-group text-center">
                 <div class="row">
+                    <label for="firstname" class="col-sm-3 control-label">Mot de passes</label>
+                    <div class="col-sm-9">
+                        <input type="password" name="mdp" class="form-control" placeholder="Entrer le nom...">
+                    </div>
+                </div>
+            </div> <div class="form-group text-center">
+            <div class="form-group text-center">
+                <div class="row">
                     <label for="lastname" class="col-sm-3 control-label">Rôle ID</label>
                     <div class="col-sm-9">
-                        <input type="number" name="id" class="form-control" placeholder="Entrer le rôle de l'ID...">
+                        <input type="number" name="role_id" class="form-control" placeholder="Entrer le rôle de l'ID...">
                     </div>
                 </div>
             </div>
             <div class="form-group text-center">
                 <div class="col-md-12 mt-3">
+                    
                     <input type="submit" name="btn_insert" class="btn btn-success" value="Insérer">
                     <a href="index_admin.php" class="btn btn-danger">Annuler</a>
                 </div>

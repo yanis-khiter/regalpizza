@@ -1,11 +1,13 @@
 <?php 
-       require_once('./model/Bdd.php');
+       require('./model/Bdd.php');
+
+ 
 
     if (isset($_SESSION['update_id'])) {
         try {
             $role_id = $_SESSION['update_id'];
-            $select_stmt = $db->prepare("SELECT * FROM admins WHERE role_id = :role_id");
-            $select_stmt->bindParam(':role_id', $role_id);
+            $select_stmt = $db->prepare("SELECT * FROM admins WHERE id = :id");
+            $select_stmt->bindParam(':id', $id);
             $select_stmt->execute();
             $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
             extract($row);
@@ -18,6 +20,8 @@
         $nom_up = $_SESSION['nom'];
         $prenom_up = $_SESSION['prenom'];
         $email_up = $_SESSION['email'];
+        $mdp_up = $_SESSION['mdp'];
+        $role_id_up = $_SESSION['role_id_up'];
 
         if (empty($nom_up)) {
             $errorMsg = "Entrez votre nom s'il vous plait";
@@ -27,13 +31,19 @@
             $errorMsg = "Entrez votre email s'il vous plait";
         } else if (empty($email_up)) {
             $errorMsg = "Entrez votre ID s'il vous plait";
-        }else {
+        } else if (empty($mdp_up)) {
+            $errorMsg = "Entrez votre mot de passe s'il vous plait";
+        } else if (empty($id_role)) {
+            $errorMsg = "Entrez votre rôle s'il vous plait";
+        } 
+        else  {
             try {
                 if (!isset($errorMsg)) {
-                    $update_stmt = $db->prepare("UPDATE admins SET prenom = :prenom_up, nom = :nom_up, email = :email WHERE role_id = :role_id");
+                    $update_stmt = $db->prepare("UPDATE admins SET prenom = :prenom_up, nom = :nom_up, email = :email, mdp = :mdp_up, WHERE role_id = :role_id");
                     $update_stmt->bindParam(':nom_up', $nom_up);
                     $update_stmt->bindParam(':prenom_up', $prenom_up);  
                     $update_stmt->bindParam(':email_up', $email_up);
+                    $update_stmt->bindParam(':mdp_up', $mdp_up);
                     $update_stmt->bindParam(':role_id', $role_id);
 
                     if ($update_stmt->execute()) {
@@ -103,6 +113,14 @@
                     <label for="lastname" class="col-sm-3 control-label">Email</label>
                     <div class="col-sm-9">
                         <input type="email" name="email" class="form-control" value="<?php echo $email_up; ?>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <div class="row">
+                    <label for="lastname" class="col-sm-3 control-label">Mot de passe</label>
+                    <div class="col-sm-9">
+                        <input type="password" name="email" class="form-control" value="<?php echo $mdp_up; ?>">
                     </div>
                 </div>
             </div>
