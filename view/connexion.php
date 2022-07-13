@@ -14,11 +14,18 @@ if(isset($_POST['connect'])){
     $mdp = $_POST['mdp'];
 
     if(!empty($email) && !empty($mdp)){
-        // $check_password=password_verify($mdp,$);
-        if($user->checkUserExist($email, $mdp) === 1){
-            $_SESSION['email'] = $email;
 
-            header('location:index_admin.php');
+        if($user->checkUserExist($email, $mdp) === 1){
+
+            $userInfo = $user->getUserByEmail($email);
+            var_dump($userInfo['mdp']);
+            if(password_verify($mdp, $userInfo['mdp'])){
+                $_SESSION['email'] = $userInfo['email'];
+
+                header('location:/regalpizza/accueil_crud.php');
+                
+            }
+
 
         }else{
             echo 'Erreur de login ou de mot de passe';
@@ -29,34 +36,23 @@ if(isset($_POST['connect'])){
 
   
 
-    // EMAIL
+    // // EMAIL
 
  
-    if (empty($email)) {
-        $valid=false;
-        $err_email = "Renseignez l'email.";
-    }
+    // if (empty($email)) {
 
-    elseif(filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
-        $valid=false;
-        $err_email = "Votre email n'est pas au bon format";
-        $email="";
-    }
+    //     $err_email = "Renseignez l'email.";
+    // }
+
+    // elseif(filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
+
+    //     $err_email = "Votre email n'est pas au bon format";
+    //     $email="";
+    // }
 
 
 
-    // ! MOT DE PASSE
 
-    if (empty($mdp)) {
-        $valid = false;
-        $err_mdp = "Renseignez votre mot de passe.";
-    } elseif (strlen($mdp)<8) {
-        $valid = false;
-        $err_mdp = "Le mot de passe doit être de 8 caractères minimum.";
-        $mdp="";
-    } else {
-        $mdp = password_hash($mdp, PASSWORD_DEFAULT);
-    }
 
 }
     

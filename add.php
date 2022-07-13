@@ -1,7 +1,7 @@
 <?php 
     require('./model/Admin.php');
 
-    $bdd_categorie = new Admin();
+    $bdd_admin = new Admin();
 
     if (isset($_POST['btn_insert'])) {
 
@@ -9,7 +9,7 @@
         $prenom = $_POST['prenom'];
         $email = $_POST['email'];
         $mdp = $_POST['mdp'];
-        $role_id = $_POST['role_id'];
+   
 
         if (empty($nom)) {
             $errorMsg = "Entrez votre nom s'il vous plait";
@@ -19,8 +19,6 @@
             $errorMsg = "Entrez votre email s'il vous plait";
         }else if (empty($mdp)) {
             $errorMsg = "Entrez votre mdp s'il vous plait";
-        } else if (empty($role_id)) {
-            $errorMsg = "Entrez le rôle s'il vous plait";
         } else {
   
             try {
@@ -28,12 +26,12 @@
                 if (!isset($errorMsg)) {
                     $password_hash= password_hash($mdp,PASSWORD_BCRYPT);
                     
-                    $bdd_categorie->createUser($nom, $prenom, $email, $password_hash, $role_id);
+                    $bdd_admin->createUser($nom, $prenom, $email, $password_hash);
 
                     $insertMsg = "Insertion réussie ! Vous allez être redirigé";
 
 
-                        header("refresh:2;index_admin.php");
+                        header("refresh:1;index_admin.php");
                     }
                 }
              catch (PDOException $e) {
@@ -100,20 +98,12 @@
             </div>
             <div class="form-group text-center">
                 <div class="row">
-                    <label for="firstname" class="col-sm-3 control-label">Mot de passes</label>
+                    <label for="firstname" class="col-sm-3 control-label">Mot de passe</label>
                     <div class="col-sm-9">
                         <input type="password" name="mdp" class="form-control" placeholder="Entrer le nom...">
                     </div>
                 </div>
-            </div> <div class="form-group text-center">
-            <div class="form-group text-center">
-                <div class="row">
-                    <label for="lastname" class="col-sm-3 control-label">Rôle ID</label>
-                    <div class="col-sm-9">
-                        <input type="number" name="role_id" class="form-control" placeholder="Entrer le rôle de l'ID...">
-                    </div>
-                </div>
-            </div>
+            </div> 
             <div class="form-group text-center">
                 <div class="col-md-12 mt-3">
                     

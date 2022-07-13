@@ -1,60 +1,23 @@
 <?php 
-       require('./model/Bdd.php');
+       require('./model/Admin.php');
+       $bdd_admin = new Admin();
 
- 
+    if (isset($_GET['update_id'])) {
 
-    if (isset($_SESSION['update_id'])) {
-        try {
-            $role_id = $_SESSION['update_id'];
-            $select_stmt = $db->prepare("SELECT * FROM admins WHERE id = :id");
-            $select_stmt->bindParam(':id', $id);
-            $select_stmt->execute();
-            $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
-            extract($row);
-        } catch(PDOException $e) {
-            $e->getMessage();
-        }
+            $id = $_GET['update_id'];
+            $user= $bdd_admin->fetchUser($id);
+
     }
 
-    if (isset($_SESSION['btn_update'])) {
-        $nom_up = $_SESSION['nom'];
-        $prenom_up = $_SESSION['prenom'];
-        $email_up = $_SESSION['email'];
-        $mdp_up = $_SESSION['mdp'];
-        $role_id_up = $_SESSION['role_id_up'];
+    if (isset($_POST['btn_update'])) {
 
-        if (empty($nom_up)) {
-            $errorMsg = "Entrez votre nom s'il vous plait";
-        } else if (empty($prenom_up)) {
-            $errorMsg = "Entrez votre prenom s'il vous plait";
-        } else if (empty($email_up)) {
-            $errorMsg = "Entrez votre email s'il vous plait";
-        } else if (empty($email_up)) {
-            $errorMsg = "Entrez votre ID s'il vous plait";
-        } else if (empty($mdp_up)) {
-            $errorMsg = "Entrez votre mot de passe s'il vous plait";
-        } else if (empty($id_role)) {
-            $errorMsg = "Entrez votre rôle s'il vous plait";
-        } 
-        else  {
-            try {
-                if (!isset($errorMsg)) {
-                    $update_stmt = $db->prepare("UPDATE admins SET prenom = :prenom_up, nom = :nom_up, email = :email, mdp = :mdp_up, WHERE role_id = :role_id");
-                    $update_stmt->bindParam(':nom_up', $nom_up);
-                    $update_stmt->bindParam(':prenom_up', $prenom_up);  
-                    $update_stmt->bindParam(':email_up', $email_up);
-                    $update_stmt->bindParam(':mdp_up', $mdp_up);
-                    $update_stmt->bindParam(':role_id', $role_id);
+        $nom = htmlentities($_POST['nom']);
+        $prenom = htmlentities($_POST['prenom']);
+        $email= htmlentities($_POST['email']);
+        $mdp = htmlentities($_POST['mdp']);
+ 
+        $bdd_admin->updateUser($id, $nom, $prenom, $email, $mdp);
 
-                    if ($update_stmt->execute()) {
-                        $updateMsg = "Mise à jour réussie ! ";
-                        header("refresh:2;index_admin.php");
-                    }
-                }
-            } catch(PDOException $e) {
-                echo $e->getMessage();
-            }
-        }
     }
 
 
@@ -96,7 +59,7 @@
                 <div class="row">
                     <label for="firstname" class="col-sm-3 control-label">Nom</label>
                     <div class="col-sm-9">
-                        <input type="text" name="nom" class="form-control" value="<?php echo $nom_up; ?>">
+                        <input type="text" name="nom" class="form-control" value="<?php echo $user['nom']; ?>">
                     </div>
                 </div>
             </div>
@@ -104,7 +67,7 @@
                 <div class="row">
                     <label for="firstname" class="col-sm-3 control-label">Prénom</label>
                     <div class="col-sm-9">
-                        <input type="text" name="prenom" class="form-control" value="<?php echo $prenom_up; ?>">
+                        <input type="text" name="prenom" class="form-control" value="<?php echo $user['prenom'];  ?>">
                     </div>
                 </div>
             </div>
@@ -112,7 +75,7 @@
                 <div class="row">
                     <label for="lastname" class="col-sm-3 control-label">Email</label>
                     <div class="col-sm-9">
-                        <input type="email" name="email" class="form-control" value="<?php echo $email_up; ?>">
+                        <input type="email" name="email" class="form-control" value="<?php echo $user['email'];  ?>">
                     </div>
                 </div>
             </div>
@@ -120,22 +83,14 @@
                 <div class="row">
                     <label for="lastname" class="col-sm-3 control-label">Mot de passe</label>
                     <div class="col-sm-9">
-                        <input type="password" name="email" class="form-control" value="<?php echo $mdp_up; ?>">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group text-center">
-                <div class="row">
-                    <label for="lastname" class="col-sm-3 control-label">Rôle ID</label>
-                    <div class="col-sm-9">
-                        <input type="number" name="id" class="form-control" value="<?php echo $role_id; ?>">
+                        <input type="password" name="mdp" class="form-control" value="<?php echo $user['mdp'];  ?>">
                     </div>
                 </div>
             </div>
             <div class="form-group text-center">
                 <div class="col-md-12 mt-3">
                     <input type="submit" name="btn_update" class="btn btn-success" value="Update">
-                    <a href="index.php" class="btn btn-danger">Annuler</a>
+                    <a href="index_admin.php" class="btn btn-danger">Annuler</a>
                 </div>
             </div>
 

@@ -4,12 +4,12 @@ require_once ('Bdd.php');
 
 class User extends Bdd 
 {
-    private  $id_user;
+    private  $id;
     public  $nom;
     public  $prenom;
     public  $email;
     public  $mdp;
-    public  $role_id;
+
 
   
 
@@ -18,12 +18,12 @@ function __construct() {
         /*Est appelé automatiquement lors de l’initialisation de votre objet. Initialise les différents attributs de votre objet.*/
         
         parent::__construct($this->bdd);
-        $id_user =  $this->id_user;
+        $id =  $this->id;
         $nom =  $this->nom;
         $prenom =  $this->prenom;
         $email =  $this->email;
         $mdp =  $this->mdp;
-        $role_id =  $this->role_id;
+
        
 }
 
@@ -31,7 +31,7 @@ function __construct() {
 
 //CHECK IF LOGIN EXIST : retourne un nombre de ligne en retour
 public function checkLoginExist($email){
-    $sql = "SELECT `email` FROM `admins`WHERE `email` LIKE :email";
+    $sql = "SELECT `email` FROM `admins`WHERE `email` = :email";
     $query = $this->bdd->prepare($sql);
     $query->execute(array(':email' => $email));
     return $query->rowCount();
@@ -39,10 +39,15 @@ public function checkLoginExist($email){
 
 //CHECK IF USER EXIST WITH COMBO EMAIL/MDP : retourne un nombre de ligne en retour
 public function checkUserExist($email, $mdp){
-    $sql = "SELECT `email` FROM `admins`WHERE `email` LIKE :email AND `mdp` LIKE :mdp " ;
+
+
+    $sql = "SELECT `email` FROM `admins`WHERE `email` = :email " ;
     $query = $this->bdd->prepare($sql);
-    $query->execute(array(':email' => $email, ':mdp' => $mdp));
-    return $query->rowCount();
+    $query->execute(array(':email' => $email));
+    $count =  $query->rowCount();
+
+    return $count;
+ 
 }
 
 //READ USER : retourne tous les utilisateurs en BDD
@@ -54,7 +59,16 @@ public function getAllUsers(){
     return $result;
 }
 
+public function getUserByEmail($email){
+    $sql = "SELECT * FROM `admins`WHERE `email` = :email " ;
+    $query = $this->bdd->prepare($sql);
+    $query->execute(array(':email' => $email));
 
+    $result = $query->fetch(PDO::FETCH_ASSOC);
+
+    return $result;
+
+}
 
 
 
