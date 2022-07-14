@@ -18,7 +18,7 @@ if(isset($_POST['connect'])){
         if($user->checkUserExist($email, $mdp) === 1){
 
             $userInfo = $user->getUserByEmail($email);
-            var_dump($userInfo['mdp']);
+        
             if(password_verify($mdp, $userInfo['mdp'])){
                 $_SESSION['email'] = $userInfo['email'];
 
@@ -26,32 +26,26 @@ if(isset($_POST['connect'])){
                 
             }
 
-
-        }else{
-            echo 'Erreur de login ou de mot de passe';
+            else {
+                $erreur = "Email ou Mot de passe incorrect !";
+            }
+        } else {
+            $erreur = "Email ou Mot de passe incorrect !";
         }
-    }else{
-        echo 'Veuillez remplir tous les champs';
     }
 
   
 
-    // // EMAIL
-
+    // EMAIL
  
-    // if (empty($email)) {
+    if (empty($email)) {
+        $err_email = "Renseignez l'email.";
+    }
 
-    //     $err_email = "Renseignez l'email.";
-    // }
-
-    // elseif(filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
-
-    //     $err_email = "Votre email n'est pas au bon format";
-    //     $email="";
-    // }
-
-
-
+    elseif(filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
+        $err_email = "Votre email n'est pas au bon format";
+        $email="";
+    }
 
 
 }

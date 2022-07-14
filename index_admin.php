@@ -1,25 +1,20 @@
 <?php 
-        require('./model/Admin.php');
 
-        $bdd = new Bdd();
+session_start();
+
+        require('./model/Admin.php');
+ 
         $bdd_admin = new Admin();
 
+    if (isset($_GET['delete_id'])) {
+        $id_produit = $_GET['delete_id'];
 
-        if (isset($_SESSION['delete_id'])) {
 
-            $id = $_SESSION['delete_id'];
-    
-            $select_stmt = $this->bdd->prepare("SELECT * FROM admins WHERE id = :id");
-            $select_stmt->execute(array(':id'=>$id));
+        $bdd_admin->deleteAdmin($id_produit);
 
-            $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
-            
-            $delete_stmt = $this->bdd->prepare('DELETE FROM admins WHERE id = :id');
-            $delete_stmt->execute(array(':id'=>$id));
-    
-            header('Location:index_admin.php');
-        }
-    
+
+        header('Location:index_admin.php');
+    }
 ?>
 
 <!DOCTYPE html>

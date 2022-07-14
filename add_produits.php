@@ -1,4 +1,7 @@
 <?php 
+
+session_start(); 
+
     require('./model/Produit.php');
 
     $bdd_produit = new Produit();

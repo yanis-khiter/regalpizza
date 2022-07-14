@@ -27,6 +27,14 @@ public function createUser($nom, $prenom, $email, $mdp){
     return $fetch;
 }
 
+
+
+public function deleteAdmin($id){
+    $delete_stmt = $this->bdd->prepare('DELETE FROM admins WHERE id = :id');
+    $delete_stmt->execute([':id' => $id]);
+}
+
+
 public function fetchUser($id){
     $id = $_GET['update_id'];
     $select_stmt = $this->bdd->prepare("SELECT * FROM admins WHERE id = :id");
@@ -56,7 +64,7 @@ public function updateUser($id, $nom, $prenom, $email, $mdp){
 
 
                     if ($update_stmt->execute(['nom'=>$nom, 'prenom'=>$prenom, 'email'=>$email, 'mdp'=>$mdp, 'id'=>$id])) {
-                        $updateMsg = "Mise à jour réussie ! ";
+                        $UpdateMsg = "Mise à jour réussie ! ";
                         header("refresh:2;index_admin.php");
                     }
                 }

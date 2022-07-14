@@ -11,8 +11,6 @@ class User extends Bdd
     public  $mdp;
 
 
-  
-
 function __construct() {
 
         /*Est appelé automatiquement lors de l’initialisation de votre objet. Initialise les différents attributs de votre objet.*/
@@ -28,7 +26,6 @@ function __construct() {
 }
 
 
-
 //CHECK IF LOGIN EXIST : retourne un nombre de ligne en retour
 public function checkLoginExist($email){
     $sql = "SELECT `email` FROM `admins`WHERE `email` = :email";
@@ -39,7 +36,6 @@ public function checkLoginExist($email){
 
 //CHECK IF USER EXIST WITH COMBO EMAIL/MDP : retourne un nombre de ligne en retour
 public function checkUserExist($email, $mdp){
-
 
     $sql = "SELECT `email` FROM `admins`WHERE `email` = :email " ;
     $query = $this->bdd->prepare($sql);
@@ -70,17 +66,5 @@ public function getUserByEmail($email){
 
 }
 
-
-
-
-//UPDATE
-public function updateUser($nom, $prenom, $email, $mdp, $role_id){
-    //On écrit la requête
-    $sql = "UPDATE admins SET nom = :nom, prenom = :prenom, email = :email, mdp = :mdp, role_id = :role_idWHERE id_user = :id_user";
-    //On prépare la requête
-    $query = $this->bdd->prepare($sql);
-    //On execute la requête
-    $query->execute(array(':nom' => $nom, ':prenom' => $prenom, ':email' => $email, ':mdp' => $mdp, ':role_id' => $role_id));
-} 
 
 }

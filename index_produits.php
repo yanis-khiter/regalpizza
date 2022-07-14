@@ -1,20 +1,17 @@
 <?php 
-        require('./model/Produit.php');
 
+session_start();
+
+
+        require('./model/Produit.php');
 
         $bdd_produit = new Produit();
 
     if (isset($_GET['delete_id'])) {
         $id_produit = $_GET['delete_id'];
 
-        // $select_stmt = $bdd->prepare("SELECT * FROM produits");
-        // $select_stmt->bindParam(':id_produit', $id_produit);
-        // $select_stmt->execute();
-        // $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
 
         $bdd_produit->deleteProduit($id_produit);
-
-        // Delete an original record from db
 
 
         header('Location:index_produits.php');

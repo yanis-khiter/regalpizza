@@ -1,21 +1,17 @@
 <?php 
+
+session_start();
+
         require('./model/Categorie.php');
 
-        $bdd = new Bdd();
-        $bdd_categories = new Categorie();
+        $bdd_categorie = new Categorie();
 
-    if (isset($_SESSION['delete_id'])) {
-        $id_categorie = $_SESSION['delete_id'];
+    if (isset($_GET['delete_id'])) {
+        $id_categorie = $_GET['delete_id'];
 
-        $select_stmt = $this->bdd->prepare("SELECT * FROM categories");
-        $select_stmt->bindParam(':id_categorie', $id_categorie);
-        $select_stmt->execute();
-        $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Delete an original record from db
-        $delete_stmt = $this->bdd->prepare('DELETE FROM categories WHERE id_categorie = :id_categorie');
-        $delete_stmt->bindParam(':id_categorie', $id_categorie);
-        $delete_stmt->execute();
+        $bdd_categorie->deleteCategorie($id_categorie);
+
 
         header('Location:index_categories.php');
     }
@@ -48,7 +44,7 @@
 
         <tbody>
             <?php 
-                       $select_stmt = $bdd_categories->getCategorie();
+                       $select_stmt = $bdd_categorie->getCategorie();
             
                        $row=$select_stmt;
        

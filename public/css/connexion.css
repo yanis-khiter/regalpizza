@@ -8,12 +8,11 @@ html {
     src: url("../zen-dots/ZenDots-Regular.ttf");
     }
     
-    
     body{
-    /* background-image: url("../img/test88.jpg");
-    background-image: cover; */
-    background-color: rgb(163, 163, 163);
-    }
+        background-image: url(".../img/coni.jpg");
+        background-size: cover;
+        }
+    
     
     
     .conni {

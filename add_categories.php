@@ -1,4 +1,7 @@
 <?php 
+
+session_start();
+
     require('./model/Categorie.php');
 
     $bdd_categories = new Categorie();

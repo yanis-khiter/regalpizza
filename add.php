@@ -1,4 +1,7 @@
 <?php 
+
+session_start();
+
     require('./model/Admin.php');
 
     $bdd_admin = new Admin();
