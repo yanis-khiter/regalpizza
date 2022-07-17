@@ -1,39 +1,45 @@
+
+html {
+font-family: 'Yeseva One';
+}
+
+
 body{
-    background-image: url("../img/wood.jpg");
-    background-size: cover;
-    }
+background-image: url("../img/wood.jpg");
+background-size: cover;
+}
 
 
 h1 {
-    font-size: 80px;
-    text-align: center;
-    text-shadow: -1px -1px 0 rgb(255, 255, 255), 1px -1px 0 rgb(255, 255, 255), -1px 1px 0 rgb(255, 255, 255), 1px 1px 0 rgb(255, 255, 255), 1px 1px 10px #000000;
-    margin-bottom: 3%;
-    margin-top:5%
+font-size: 80px;
+text-align: center;
+text-shadow: -1px -1px 0 rgb(255, 255, 255), 1px -1px 0 rgb(255, 255, 255), -1px 1px 0 rgb(255, 255, 255), 1px 1px 0 rgb(255, 255, 255), 1px 1px 10px #000000;
+margin-bottom: 3%;
+margin-top:5%
 }
 
 .h2prod {
-    text-align: center;
-    font-size: 40px;
-    margin-bottom : 3%;
-    color: rgb(0, 255, 0);
-    text-shadow: -1px -1px 0 rgb(0, 0, 0), 1px -1px 0 rgb(0, 0, 0), -1px 1px 0 rgb(0, 0, 0), 1px 1px 0 rgb(0, 0, 0), 1px 1px 10px #000000;
+text-align: center;
+font-size: 40px;
+margin-bottom : 3%;
+color: rgb(0, 255, 0);
+text-shadow: -1px -1px 0 rgb(0, 0, 0), 1px -1px 0 rgb(0, 0, 0), -1px 1px 0 rgb(0, 0, 0), 1px 1px 0 rgb(0, 0, 0), 1px 1px 10px #000000;
 }
 
 .h2ad {
-    text-align: center;
-    font-size: 40px;
-    margin-bottom : 3%;
-    text-shadow: -1px -1px 0 rgb(0, 0, 0), 1px -1px 0 rgb(0, 0, 0), -1px 1px 0 rgb(0, 0, 0), 1px 1px 0 rgb(0, 0, 0), 1px 1px 10px #000000;
-    color: rgb(255, 255, 255)
+text-align: center;
+font-size: 40px;
+margin-bottom : 3%;
+text-shadow: -1px -1px 0 rgb(0, 0, 0), 1px -1px 0 rgb(0, 0, 0), -1px 1px 0 rgb(0, 0, 0), 1px 1px 0 rgb(0, 0, 0), 1px 1px 10px #000000;
+color: rgb(255, 255, 255)
 }
 
 .h2cat {
-    text-align: center;
-    font-size: 40px;
-    margin-bottom : 3%;
-    text-shadow: -1px -1px 0 rgb(0, 0, 0), 1px -1px 0 rgb(0, 0, 0), -1px 1px 0 rgb(0, 0, 0), 1px 1px 0 rgb(0, 0, 0), 1px 1px 10px #000000;
-    color: rgb(255, 0, 0)
+text-align: center;
+font-size: 40px;
+margin-bottom : 3%;
+text-shadow: -1px -1px 0 rgb(0, 0, 0), 1px -1px 0 rgb(0, 0, 0), -1px 1px 0 rgb(0, 0, 0), 1px 1px 0 rgb(0, 0, 0), 1px 1px 10px #000000;
+color: rgb(255, 0, 0)
 }
 
 
@@ -48,16 +54,16 @@ margin-top: 4%;
 
 img {
 border-radius: 10%;
-    width : 370px
-    }
+width : 370px
+}
 
 .images #idadmin:hover, #idcat:hover, #idprod:hover { 
-    transform: scale(1.1, 1.1);
-    transition: 0.8s;
+transform: scale(1.1, 1.1);
+transition: 0.8s;
 }
 
 .images #idadmin, #idcat, #idprod { 
-    transition: 0.8s;
+transition: 0.8s;
 }
 
 

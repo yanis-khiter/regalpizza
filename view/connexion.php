@@ -64,8 +64,10 @@ if(isset($_POST['connect'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../public/css/connexion.css">
     <title>Connexion staff</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet"> 
 </head>
-<body>
+<body class="bodydy">
 
 <main> 
         

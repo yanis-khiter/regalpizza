@@ -57,7 +57,7 @@
 
 <section class="speciality" id="speciality">
 
-    <h1 class="heading"> our <span>speciality</span> </h1>
+    <h1 class="heading"> <span>Nos catégories</span> </h1>
 
     <div class="box-container">
 
@@ -115,6 +115,21 @@
 </section>
 
 <!-- speciality section ends -->
+
+<div class="contenu_carou_auto">
+        <div class="caroussel-image">
+
+            <img src="img-carrou/Forbidden-carrou.jpg" alt="Horizon Forbidden West">
+            <img src="img-carrou/assassin-carrou.jpeg" alt="Assassin Screed Brotherhood">
+            <img src="img-carrou/battle-carrou.jpg" alt="Battlefield 2042">
+            <img src="img-carrou/bo2-carrou.jpg" alt="Call of Duty Black Ops 2">
+            <img src="img-carrou/crash-carrou.jpg" alt="Crash Bandicoot 4 It's About Time">
+            <img src="img-carrou/rd2-carrou.jpg" alt="Red Dead Dedemption 2">
+            <img src="img-carrou/Gta5-carrou.jpg" alt="Grand Theft Auto V">
+            <img src="img-carrou/mario-carrou.jpg" alt="Mario Kart 8 Deluxe">
+
+        </div>
+    </div>
 
 <!-- popular section starts  -->
 
@@ -207,40 +222,7 @@
 
 </section>
 
-<!-- popular section ends -->
 
-<!-- steps section starts  -->
-
-<div class="step-container">
-
-    <h1 class="heading">how it <span>works</span></h1>
-
-    <section class="steps">
-
-        <div class="box">
-            <img src="images/step-1.jpg" alt="">
-            <h3>choose your favorite food</h3>
-        </div>
-        <div class="box">
-            <img src="images/step-2.jpg" alt="">
-            <h3>free and fast delivery</h3>
-        </div>
-        <div class="box">
-            <img src="images/step-3.jpg" alt="">
-            <h3>easy payments methods</h3>
-        </div>
-        <div class="box">
-            <img src="images/step-4.jpg" alt="">
-            <h3>and finally, enjoy your food</h3>
-        </div>
-    
-    </section>
-
-</div>
-
-<!-- steps section ends -->
-
-<!-- gallery section starts  -->
 
 <section class="gallery" id="gallery">
 
@@ -331,7 +313,8 @@
 
 <section class="review" id="review">
 
-    <h1 class="heading"> our customers <span>reviews</span> </h1>
+    <h1 class="heading"> 
+    <span>Les Avis</span> </h1>
 
     <div class="box-container">
 
@@ -375,74 +358,6 @@
     </div>
 
 </section>
-
-<!-- review section ends -->
-
-<!-- order section starts  -->
-
-<section class="order" id="order">
-
-    <h1 class="heading"> <span>order</span> now </h1>
-
-    <div class="row">
-        
-        <div class="image">
-            <img src="images/order-img.jpg" alt="">
-        </div>
-
-        <form action="">
-
-            <div class="inputBox">
-                <input type="text" placeholder="name">
-                <input type="email" placeholder="email">
-            </div>
-
-            <div class="inputBox">
-                <input type="number" placeholder="number">
-                <input type="text" placeholder="food name">
-            </div>
-
-            <textarea placeholder="address" name="" id="" cols="30" rows="10"></textarea>
-
-            <input type="submit" value="order now" class="btn">
-
-        </form>
-
-    </div>
-
-</section>
-
-<!-- order section ends -->
-
-<!-- footer section  -->
-
-<section class="footer">
-
-    <div class="share">
-        <a href="#" class="btn">facebook</a>
-        <a href="#" class="btn">twitter</a>
-        <a href="#" class="btn">instagram</a>
-        <a href="#" class="btn">pinterest</a>
-        <a href="#" class="btn">linkedin</a>
-    </div>
-
-    <h1 class="credit"> created by <span> mr. web designer </span> | all rights reserved! </h1>
-
-</section>
-
-<!-- scroll top button  -->
-<a href="#home" class="fas fa-angle-up" id="scroll-top"></a>
-
-<!-- loader  -->
-<div class="loader-container">
-    <img src="images/loader.gif" alt="">
-</div>
-
-
-
-
-
-
 
 
 
