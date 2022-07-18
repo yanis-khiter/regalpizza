@@ -14,9 +14,10 @@ public function getProduit(){
 
 public function createProduit($nom_produit, $categorie_id, $prix_produit, $ingredient_produit, $image_produit, $date_creation) {
 
+
     $sql = "INSERT INTO produits (`nom_produit`, `categorie_id`, `prix_produit`, 
                                     `ingredient_produit`, `image_produit`, `date_creation`) 
-            VALUES (    :nom_prduit, 
+            VALUES (    :nom_produit, 
                         :categorie_id, 
                         :prix_produit, 
                         :ingredient_produit, 
