@@ -33,8 +33,6 @@ session_start();
     <div class="display-3 text-center">Produit</div>
     <a href="add_produits.php" class="btn btn-success mb-3">Ajouter</a>
 
-    <img src="public/img/burger.jpg" style="width:300px;">
-    
     <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
@@ -55,8 +53,6 @@ session_start();
             
           $row=$select_stmt;
           foreach($row as $rows) {
-
-            var_dump($rows["image_produit"]); 
               
             ?>
 
@@ -66,11 +62,9 @@ session_start();
                     <td><?php echo $rows["prix_produit"]; ?></td>
                     <td><?php echo $rows["ingredient_produit"]; ?></td>
                     <td><img style="width : 150px" src="<?php echo $rows["image_produit"]; ?>" alt="pizza fromage"></td>
-          
                     <td><?php echo $rows["date_creation"]; ?></td>
 
                     <td><a href="edit_produits.php?update_id=<?php echo $rows["id_produit"]; ?>" class="btn btn-warning">Modifier</a></td>
-
                     <td><a href="?delete_id=<?php echo $rows["id_produit"]; ?>" class="btn btn-danger">Supprimer</a></td>
                 </tr>
 

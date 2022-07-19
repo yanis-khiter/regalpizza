@@ -3,6 +3,7 @@
 session_start();
 
 require('./model/Produit.php');
+require_once ('./model/Outils.php');
 
 $bdd_produit = new Produit();
 
@@ -14,42 +15,6 @@ if (isset($_POST['btn_insert'])) {
     $ingredient_produit = $_POST['ingredient_produit'];
     $image_produit = '/public/img/';
     $date_creation = $_POST['date_creation'];
-
-
-    // UPLOAD IMAGE
-
-
-    if (!empty($_FILES['avatar'])) {
-      
-
-        $nameFile = $_FILES['avatar']['name'];
-        $typeFile = $_FILES['avatar']['type'];
-        $sizeFile = $_FILES['avatar']['size'];
-        $tmpFile = $_FILES['avatar']['tmp_name'];
-        $errFile = $_FILES['avatar']['error'];
-
-        // Extensions
-        $extensions = ['png', 'jpg', 'jpeg', 'gif'];
-        // Type d'image
-        $type = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
-        // On récupère
-        $extension = explode('.', $nameFile);
-        // Max size
-        $max_size = 200000;
-
-       
-        // On vérifie que le type est autorisés
-        if (in_array($typeFile, $type)) {
-            // On vérifie que il n'y a que deux extensions
-            if (count($extension) <= 2 && in_array(strtolower(end($extension)), $extensions)) {
-               
-                // On vérifie le poids de l'image
-                if ($sizeFile < $max_size) {
-
-                    // On bouge l'image uploadé dans le dossier upload
-                    if (move_uploaded_file($tmpFile, 'public/img/' . uniqid() . '.' . strtolower(end($extension)))) {
-                        // 
-                        echo "This is uploaded!";
 
 
                         if (empty($nom_produit)) {
@@ -67,35 +32,20 @@ if (isset($_POST['btn_insert'])) {
                             $errorMsg = "Entrez date de création s'il vous plait";
                         } else {
 
-                            try {
+   
+                        $nameFile = (Outils::checkImage());
 
-                                if (!isset($errorMsg)) {
+                                if ($nameFile) {
 
-                                    $bdd_produit->createProduit($nom_produit, $categorie_id, $prix_produit,  $ingredient_produit, 'public/img/' . uniqid() . '.' . strtolower(end($extension)), $date_creation);
+                                    $bdd_produit->createProduit($nom_produit, $categorie_id, $prix_produit,  $ingredient_produit, 'public/img/' .$nameFile, $date_creation);
 
                                     $insertMsg = "Insertion réussie ! Vous allez être redirigé";
 
                                     header("refresh:1;index_produits.php");
                                 }
-                            } catch (PDOException $e) {
-                                echo $e->getMessage();
-                            }
-                        }
-                    } else
-                        echo "failed";
-                } else {
 
-                    echo "Fichier trop lourd ou format incorrect";
-                }
-            } else {
-                echo "Extension failed";
-            }
-        } else {
-            echo "Type non autorisé";
-        }
-    } else {
-        header('Location: index_produits.php');
-    }
+                        }
+
 }
 ?>
 

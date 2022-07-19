@@ -3,6 +3,7 @@
 session_start();
 
        require('./model/Categorie.php');
+       require_once ('./model/Outils.php');
        $bdd_categorie = new Categorie();
 
     if (isset($_GET['update_id'])) {
@@ -15,14 +16,42 @@ session_start();
     if (isset($_POST['btn_update'])) {
 
         $nom_categorie = htmlentities($_POST['nom_categorie']);
-        $image_categorie = htmlentities($_POST['image_categorie']);
+        $image_categorie= htmlentities($_POST['image_categorie']);
         $description_categorie= htmlentities($_POST['description_categorie']);
+        $imageOk = true;
+        if (empty($nom_categorie)) {
+            $errorMsg = "Entrez votre nom de catégorie s'il vous plait";
+        } else if (empty($description_categorie)) {
+            $errorMsg = "Entrez votre description s'il vous plait";
         
- 
-        $bdd_categorie->updateCategorie($id_categorie,$nom_categorie, $image_categorie, $description_categorie);
+        } else  {
+    
+
+            if(isset($_FILES['avatar']) && $_FILES['avatar']['size'] > 0){
+                $image_categorie = (Outils::checkImage());
+                $test = explode('/', $image_categorie);
+
+                if($test[0] != 'public' ){
+                $imageOk = false;
+                $errorMsg = $image_categorie;
+                }
+
+            }
+
+            if( $imageOk){
+                $bdd_categorie->updateCategorie($id_categorie,$nom_categorie, $image_categorie, $description_categorie);
+                $updateMsg = "Modification réussie ! Vous allez être redirigé";
+                header("refresh:1;index_categories.php");
+
+            }
+
+
+
+
         
 
     }
+}
     
 
 
@@ -51,14 +80,14 @@ session_start();
     
 
     <?php 
-         if (isset($UpdateMsg)) {
+         if (isset($updateMsg)) {
     ?>
         <div class="alert alert-success">
             <strong>Réussie ! <?php echo $updateMsg; ?></strong>
         </div>
     <?php } ?>
 
-    <form method="post" class="form-horizontal mt-5">
+    <form method="post" class="form-horizontal mt-5" enctype="multipart/form-data">
             
             <div class="form-group text-center">
                 <div class="row">
@@ -72,7 +101,8 @@ session_start();
                 <div class="row">
                     <label for="firstname" class="col-sm-3 control-label">Image</label>
                     <div class="col-sm-9">
-                        <input type="text" name="image_categorie" class="form-control" placeholder="Insérer l'image..." value="<?php echo $user['image_categorie'];  ?>">
+                        <input type="file" name="avatar" class="form-control" placeholder="Insérer l'image...">
+                        <input type="text" name="image_categorie" class="form-control" placeholder="Entrer le nom..." value="<?php echo $user['image_categorie']; ?>" hidden>
                     </div>
                 </div>
             </div>

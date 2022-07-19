@@ -12,6 +12,10 @@ public function getProduit(){
 }
 
 
+
+
+
+
 public function createProduit($nom_produit, $categorie_id, $prix_produit, $ingredient_produit, $image_produit, $date_creation) {
 
 
@@ -38,10 +42,21 @@ public function createProduit($nom_produit, $categorie_id, $prix_produit, $ingre
     return $fetch;
 }
 
+
+
+
+
+
+
 public function deleteProduit($id){
     $delete_stmt = $this->bdd->prepare('DELETE FROM produits WHERE id_produit = :id_produit');
     $delete_stmt->execute([':id_produit' => $id]);
 }
+
+
+
+
+
 
 
 
@@ -53,47 +68,34 @@ public function fetchUser($id_produit){
     return $row;
 }
 
-public function updateProduit($id_produit, $nom_produit, $categorie_id, $prix_produit, $ingredient_produit, $image_produit, $date_creation){
-
-    if (empty($nom_produit)) {
-    $errorMsg = "Entrez votre nom s'il vous plait";
-} else if (empty($categorie_id)) {
-    $errorMsg = "Entrez votre catégorie s'il vous plait";
-} else if (empty($prix_produit)) {
-    $errorMsg = "Entrez votre prix s'il vous plait";
-} else if (empty($ingredient_produit)) {
-    $errorMsg = "Entrez vos ingrédients s'il vous plait";
-} else if (empty($image_produit)) {
-    $errorMsg = "Entrez votre image s'il vous plait";
-} else if (empty($date_creation)) {
-    $errorMsg = "Entrez votre date s'il vous plait";
-} else  {
-    try {
-
-        if (!isset($errorMsg)) {
-
-            $update_stmt = $this->bdd->prepare("UPDATE produits SET nom_produit = :nom_produit, categorie_id = :categorie_id, prix_produit = :prix_produit, ingredient_produit = :ingredient_produit, image_produit = :image_produit, date_creation = :date_creation WHERE id_produit = :id_produit");
 
 
-            if ($update_stmt->execute([
-            ':nom_produit' => $nom_produit, 
-            ':categorie_id' => $categorie_id, 
-            ':prix_produit' => $prix_produit, 
-            ':ingredient_produit' => $ingredient_produit, 
-            ':image_produit' => $image_produit, 
-            ':date_creation' => $date_creation,
-            ':id_produit' => $id_produit])
-            ) {
+
+
+
+
+
+
+public function updateProduit($id_produit, $nom_produit, $categorie_id, $prix_produit, $ingredient_produit, $image_produit){
+
+            $update_stmt = $this->bdd->prepare("UPDATE produits SET nom_produit = :nom_produit, categorie_id = :categorie_id, prix_produit = :prix_produit, ingredient_produit = :ingredient_produit, image_produit = :image_produit WHERE id_produit = :id_produit");
+
+            $arg = [
+                ':nom_produit' => $nom_produit, 
+                ':categorie_id' => $categorie_id, 
+                ':prix_produit' => $prix_produit, 
+                ':ingredient_produit' => $ingredient_produit, 
+                ':image_produit' => $image_produit, 
+                ':id_produit' => $id_produit];
+
+            if ($update_stmt->execute($arg)) {
                 $UpdateMsg = "Mise à jour réussie ! ";
-                header("refresh:2;index_produits.php");
+                header("refresh:1;index_produits.php");
             }
-        }
-    } catch(PDOException $e) {
-        echo $e->getMessage();
-    }
+     
 }
 
-}
+
 
 
 

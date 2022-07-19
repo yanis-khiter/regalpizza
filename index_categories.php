@@ -56,6 +56,7 @@ session_start();
                     <td><?php echo $rows["nom_categorie"]; ?></td>
                     <td><img style="width : 150px" src="<?php echo $rows["image_categorie"]; ?>" alt="Categorie Classique"></td>
                     <td><?php echo $rows["description_categorie"]; ?></td>
+                    
                     <td><a href="edit_categories.php?update_id=<?php echo $rows["id_categorie"]; ?>" class="btn btn-warning">Modifier</a></td>
                     <td><a href="?delete_id=<?php echo $rows["id_categorie"]; ?>" class="btn btn-danger">Supprimer</a></td>
                 </tr>

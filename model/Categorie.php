@@ -14,8 +14,8 @@ public function getCategorie(){
 
 public function createCategorie($nom_categorie, $image_categorie, $description_categorie) {
 
-    $sql = "INSERT INTO produits (`nom_categorie`, `image_categorie`, `description_categorie`,) 
-            VALUES (:nom_categorie, :image_categorie, :description_categorie,)";
+    $sql = "INSERT INTO categories (`nom_categorie`, `image_categorie`, `description_categorie`) 
+            VALUES (:nom_categorie, :image_categorie, :description_categorie)";
 
     $query = $this->bdd->prepare($sql);
 
@@ -30,10 +30,15 @@ public function createCategorie($nom_categorie, $image_categorie, $description_c
 
 
 
+
+
 public function deleteCategorie($id){
     $delete_stmt = $this->bdd->prepare('DELETE FROM categories WHERE id_categorie = :id_categorie');
     $delete_stmt->execute([':id_categorie' => $id]);
 }
+
+
+
 
 
 public function fetchUser($id_categorie){
@@ -43,6 +48,10 @@ public function fetchUser($id_categorie){
     $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
+
+
+
+
 
 public function updateCategorie($id_categorie,$nom_categorie, $image_categorie, $description_categorie){
 
